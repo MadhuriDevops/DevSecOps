@@ -1,0 +1,11 @@
+FROM openjdk:8-jdk
+
+RUN apt-get -y update; apt-get -y install maven
+
+RUN mkdir -p /data/javaapp
+COPY . /data/javaapp/
+
+WORKDIR /data/javaapp/WebGoat
+
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","webgoat-container/target/webgoat-container-7.1-war-exec.jar"]

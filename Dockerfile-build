@@ -1,0 +1,16 @@
+FROM openjdk:8-jdk
+
+RUN apt-get -y update; apt-get -y install maven
+
+RUN mkdir -p /data/javaapp
+COPY . /data/javaapp/
+
+WORKDIR /data/javaapp/WebGoat
+RUN mvn clean compile
+
+WORKDIR /data/javaapp/WebGoat-Lessons
+RUN mvn package
+RUN cp target/plugins/*.jar ../WebGoat/webgoat-container/src/main/webapp/plugin_lessons
+
+WORKDIR /data/javaapp/WebGoat
+CMD ["mvn","package"]
